@@ -1,0 +1,66 @@
+Prerequisites:
+1. Debian11 on VBox (see Setup Debian11 VBox Bridged.txt)
+2. https://www.rosehosting.com/blog/how-to-install-python-3-10-on-debian-11/#Prerequisites (Python 3.10+)
+3. Curl (run sudo apt-get update, then sudo apt-get install curl)
+
+Steps:
+
+1. Install Prerequisites (https://frappeframework.com/docs/user/en/installation#debian-ubuntu)
+``````````````` GENERAL INSTRUCTIONS
+(If some command does not work, try using sudo)
+Follow the link, but change some commands:
+sudo apt install git python-dev python-pip redis-server -> sudo apt install git python3-dev python3-pip redis-server
+apt-get install mariadb-client-10.3 -> sudo apt-get install mariadb-client-10.5
+mysql_secure_installation -> sudo mysql_secure_installation
+sudo apt install python3.11-venv
+Follow until before bench init, make sure to know the MySQL root password
+```````````````
+
+``````````````` DEBIAN 12 INSTRUCTIONS
+Complete steps on a fresh new debian 12 server (still following the link but there are slight modifications):
+1. sudo apt install git python3-dev python3-pip redis-server
+1.1 python3 --version
+2. sudo apt install software-properties-common
+3. sudo apt-get update
+4. sudo apt-get install mariadb-server
+4.1. sudo mysql_secure_installation
+make sure to modify the root password (optional) and take note of it
+5. sudo apt-get install mariadb-client
+6. nano /etc/mysql/my.cnf
+6.1 add:
+[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+default-character-set = utf8mb4
+7. sudo service mysql restart
+8. curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+9. reopen terminal
+10. nvm install 18
+10.1. node -v
+11. npm install -g yarn
+12. sudo apt-get install xvfb libfontconfig wkhtmltopdf
+(then follow step Setup Python venv before continuing to the next step)
+13. pip3 install frappe-bench
+14. bench --version
+```````````````
+
+1.2. Setup Python venv
+```` if venv is not yet installed
+sudo apt install python{versionnumber}-venv
+````
+python3 -m venv [venv_name] // to use a specific version: python3.10 -m venv [venv_name]
+source [venv_name]/bin/activate // activate the venv
+
+2. Setup Bench & Site (https://github.com/frappe/bench#manual-installation)
+p.s. change []
+bench init [bench-name] --frappe-branch=version-14 --python=python
+bench new-site [site-name]
+bench get-app --branch=version-14 erpnext
+bench --site [site-name] install-app erpnext
+
+3. Setup Bench Start (https://medium.com/@krupalvora/installation-of-erpnext-on-windows-c62047cae7c7)
+bench use [site-name]
+bench start (this is for launching the site on the web using our localhost (default))

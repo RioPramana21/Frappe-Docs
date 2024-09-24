@@ -1,0 +1,52 @@
+Prerequisites:
+1. Debian 11 (https://www.debian.org/releases/bullseye/)
+2. BitVise Client (https://www.bitvise.com/ssh-client-download)
+3. Virtual Box (https://www.virtualbox.org/wiki/Downloads)
+4. Python 3.10+ (https://www.python.org/downloads/)
+4.1. Python Core & win32api (run pip install pywin32) (https://www.sysnettechsolutions.com/en/fix-python-win32api-virtualbox/)
+5. Visual Studio Redistributable 2019 x64 (https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022)
+
+Steps:
+1. Install Virtual Box default settings (https://www.sysnettechsolutions.com/en/install-oracle-vm-virtualbox-on-windows-10/)
+
+2. New VM
+Set name
+Choose VMs folder (D: Drive recommended)
+Select the downloaded Debian 11 .iso
+Type Linux version Debian (x64)
+Proceed with default settings
+
+3. Setup Bridged Network
+VirtualBox settings -> Network -> Attached to: Bridged Adapter
+
+4. Check PATH on ~/.bashrc
+Make sure /usr/sbin is in PATH
+or use "su -l"
+
+5. Create a New User
+adduser username
+
+6. Create Privilege
+usermod -aG sudo username
+substitute user username
+
+7. Set Up Basic Firewall
+sudo apt update
+sudo apt install ufw
+sudo ufw app list (liat apakah ada OpenSSH)
+-- if OpenSSH does not exist: sudo apt install openssh-server
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo ufw status (Liat OpenSSH sudah allow)
+
+8. Setup BitVise
+ip a (get the ip)
+Open BitVise
+Insert the ip on Host
+Port = 22
+username = [the initial username]
+Login
+
+9. Cont.
+New terminal console for terminal
+New SFTP window for file transfers

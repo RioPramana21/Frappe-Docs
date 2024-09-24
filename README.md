@@ -14,6 +14,7 @@ This documentation repository is organized into several sections for easy naviga
 - **Portal Development**: Instructions on creating and managing web portals using Frappe.
 - **Setup Related**: Covers initial setup instructions and configuration management.
 - **Tutorial**: Step-by-step tutorials and use case examples to help users get started with Frappe development.
+- **Miscellanous**: Other topics.
 
 ## Purpose
 
